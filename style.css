@@ -526,6 +526,207 @@ footer p {
 }
 
 
+
+
+#attendees {
+    position: relative;
+    overflow: hidden;
+}
+
+#attendees .subtitle {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 1.2rem;
+    color: #ddd;
+}
+
+.attendees-slider {
+    position: relative;
+    margin: 40px 0;
+    padding: 0 40px;
+}
+
+.slider-container {
+    overflow: hidden;
+    padding: 30px 10px;
+    margin: 0 -10px;
+}
+
+.slider-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    gap: 25px;
+    padding: 5px;
+}
+
+.attendee-card {
+    flex: 0 0 280px;
+    background: linear-gradient(145deg, rgba(12, 26, 58, 0.8), rgba(26, 42, 108, 0.8));
+    border-radius: 16px;
+    padding: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.attendee-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--gold), var(--primary-blue));
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite linear;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -100% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.attendee-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    border-color: var(--gold);
+}
+
+.card-inner {
+    padding: 300px 1px 10px;
+    height: 300px;
+}
+
+.attendee-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px;
+    border: 3px solid var(--gold);
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.attendee-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.attendee-card:hover .attendee-image img {
+    transform: scale(1.1);
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+.attendee-info {
+    text-align: center;
+    position: relative;
+}
+
+.attendee-info h3 {
+    font-size: 1.3rem;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.attendee-info p {
+    font-size: 0.95rem;
+    color: #ddd;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.attendee-flag {
+    position: absolute;
+    top: -10px;
+    right: 0;
+    width: 30px;
+    height: 20px;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.attendee-flag img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slider-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.slider-btn {
+    background: linear-gradient(145deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.3));
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.slider-btn:hover {
+    background: var(--gold);
+    color: var(--primary-blue);
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+}
+
+.slider-dots {
+    display: flex;
+    gap: 10px;
+    margin: 0 15px;
+}
+
+.slider-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.slider-dot.active {
+    background: var(--gold);
+    transform: scale(1.2);
+}
+
+
+
+
+
 @media (max-width: 1024px) {
     .logo {
         font-size: 3.8rem;
@@ -552,7 +753,39 @@ footer p {
     }
 }
 
+
+
+
+@media (max-width: 968px) {
+    .attendee-card {
+        flex: 0 0 250px;
+    }
+
+    .attendees-slider {
+        padding: 0 30px;
+    }
+}
+
 @media (max-width: 768px) {
+
+    .attendee-card {
+        flex: 0 0 220px;
+    }
+
+    .attendee-image {
+        width: 100px;
+        height: 100px;
+    }
+
+    .attendees-slider {
+        padding: 0 20px;
+    }
+
+    .slider-btn {
+        width: 45px;
+        height: 45px;
+    }
+
     .logo {
         font-size: 3.5rem;
         margin-right: 0;
@@ -630,6 +863,30 @@ footer p {
 }
 
 @media (max-width: 480px) {
+
+    .attendees-slider {
+        padding: 0 15px;
+    }
+
+    .slider-controls {
+        margin-top: 20px;
+    }
+
+    .slider-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .slider-dots {
+        gap: 8px;
+    }
+
+    .slider-dot {
+        width: 10px;
+        height: 10px;
+    }
+
+
     .logo {
         font-size: 3rem;
     }
@@ -642,7 +899,7 @@ footer p {
         font-size: 0.9rem;
     }
 
-    .pastor-chris > img {
+    .pastor-chris>img {
         height: 5.5rem;
     }
 

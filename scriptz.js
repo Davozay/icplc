@@ -17,15 +17,14 @@ for (let i = 0; i < bubbleCount; i++) {
   bubble.style.width = `${size}px`;
   bubble.style.height = `${size}px`;
 
-  // Random position
   bubble.style.left = `${Math.random() * 100}%`;
   bubble.style.top = `${Math.random() * 100}%`;
 
-  // Random animation delay and duration
+  
   bubble.style.animationDelay = `${Math.random() * 5}s`;
   bubble.style.animationDuration = `${15 + Math.random() * 15}s`;
 
-  // Add image to bubble
+
   const img = document.createElement("img");
   img.src = imageUrls[Math.floor(Math.random() * imageUrls.length)];
   img.alt = "LoveWorld";
@@ -33,13 +32,13 @@ for (let i = 0; i < bubbleCount; i++) {
 
   bubbleContainer.appendChild(bubble);
 
-  // Animate bubbles in
+  
   setTimeout(() => {
     bubble.classList.add("loaded");
   }, 100 * i);
 }
 
-// Countdown timer for September 4, 2025
+
 function updateCountdown() {
   const targetDate = new Date("2025-09-04T00:00:00").getTime();
   const now = new Date().getTime();
@@ -68,7 +67,7 @@ function updateCountdown() {
       .toString()
       .padStart(2, "0");
   } else {
-    // If countdown is over
+  
     document.getElementById("days").textContent = "00";
     document.getElementById("hours").textContent = "00";
     document.getElementById("minutes").textContent = "00";
@@ -79,7 +78,7 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// Add scroll animations
+
 const observerOptions = {
   root: null,
   rootMargin: "0px",
@@ -95,7 +94,96 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-// Observe all sections for scroll animation
+
 document.querySelectorAll(".section").forEach((section) => {
   observer.observe(section);
+});
+
+
+
+
+// Enhanced Attendees slider functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const sliderTrack = document.querySelector('.slider-track');
+  const prevBtn = document.querySelector('.prev-btn');
+  const nextBtn = document.querySelector('.next-btn');
+  const cards = document.querySelectorAll('.attendee-card');
+  const dotsContainer = document.querySelector('.slider-dots');
+  
+  let currentPosition = 0;
+  let currentSlide = 0;
+  let autoSlideInterval;
+  const cardWidth = cards[0].offsetWidth + 25; // width + gap
+  const visibleCards = Math.floor(sliderTrack.offsetWidth / cardWidth);
+  const totalSlides = Math.ceil(cards.length / visibleCards);
+  
+  
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.classList.add('slider-dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+  
+  function goToSlide(slideIndex) {
+    currentSlide = slideIndex;
+    currentPosition = -slideIndex * visibleCards * cardWidth;
+    sliderTrack.style.transform = `translateX(${currentPosition}px)`;
+    
+    // Update active dot
+    document.querySelectorAll('.slider-dot').forEach((dot, index) => {
+      dot.classList.toggle('active', index === slideIndex);
+    });
+  }
+  
+  function moveSlider(direction) {
+    currentSlide += direction;
+    
+    // Handle wrap-around for infinite effect
+    if (currentSlide < 0) {
+      currentSlide = totalSlides - 1;
+    } else if (currentSlide >= totalSlides) {
+      currentSlide = 0;
+    }
+    
+    goToSlide(currentSlide);
+  }
+  
+  
+  prevBtn.addEventListener('click', () => moveSlider(-1));
+  nextBtn.addEventListener('click', () => moveSlider(1));
+  
+  
+  function startAutoSlide() {
+    autoSlideInterval = setInterval(() => moveSlider(1), 5000);
+  }
+  
+  function stopAutoSlide() {
+    clearInterval(autoSlideInterval);
+  }
+  
+  // Pause auto-slide when interacting with slider
+  sliderTrack.addEventListener('mouseenter', stopAutoSlide);
+  sliderTrack.addEventListener('mouseleave', startAutoSlide);
+  prevBtn.addEventListener('mouseenter', stopAutoSlide);
+  nextBtn.addEventListener('mouseenter', stopAutoSlide);
+  prevBtn.addEventListener('mouseleave', startAutoSlide);
+  nextBtn.addEventListener('mouseleave', startAutoSlide);
+  
+  // Initialize auto-slide
+  startAutoSlide();
+  
+  
+  window.addEventListener('resize', function() {
+    
+    const newCardWidth = cards[0].offsetWidth + 25;
+    const newVisibleCards = Math.floor(sliderTrack.offsetWidth / newCardWidth);
+    const newTotalSlides = Math.ceil(cards.length / newVisibleCards);
+    
+    if (newVisibleCards !== visibleCards || newTotalSlides !== totalSlides) {
+      
+      location.reload(); 
+    }
+  });
 });
